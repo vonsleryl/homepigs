@@ -1,8 +1,8 @@
 import React from 'react';
-import Navbar from './components/Navbar'; // Adjust path as needed
-import HeroSection from './components/HeroSection'; // Adjust path as needed
-import CoursesPage from './components/CoursesPage'; // Adjust path as needed
-import Footer from './components/Footer'; // Adjust path as needed
+import Navbar from './components/Navbar';
+import HeroSection from './components/HeroSection';
+import CoursesPage from './components/CoursesPage';
+import Footer from './components/Footer';
 
 function App() {
   return (

@@ -1,4 +1,8 @@
 import React from 'react';
+import { motion } from 'framer-motion'; // Import motion from Framer Motion
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import image1 from '../assets/images/cimg1.png';
 import image2 from '../assets/images/cimg2.png';
 import image3 from '../assets/images/cimg3.png';
@@ -19,9 +23,6 @@ import OA1 from '../assets/images/coe1.png';
 import OA2 from '../assets/images/coe2.png';
 import OA3 from '../assets/images/coe3.png';
 import OA4 from '../assets/images/coe4.png';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 
 const courses = [
   { name: 'College of Computer Studies', code: 'CCS', src: image1 },
@@ -91,64 +92,72 @@ const CoursesPage = () => {
   };
 
   return (
-    <div className="py-16">
+    <div className="py-16 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl font-bold mb-8 text-center">Our Courses</h2>
         <Slider {...settings}>
           {courses.map((course, index) => (
             <div key={index} className="px-4">
-              <div className="flex flex-col items-center mb-8">
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3 }}
+                className="flex flex-col items-center mb-8"
+              >
                 <div className="flex-shrink-0 mb-4">
-                  <img src={course.src} alt={`${course.name} Logo`} className="rounded-lg shadow-md w-full h-auto" />
+                  <motion.img
+                    src={course.src}
+                    alt={`${course.name} Logo`}
+                    className="rounded-lg shadow-md w-full h-auto"
+                  />
                 </div>
                 <h3 className="text-2xl font-bold mb-4 text-center">{course.name}</h3>
-              </div>
+              </motion.div>
             </div>
           ))}
         </Slider>
         {/* Course Details */}
         <div className="mt-16">
-          {courseDetails.map((course, index) => renderCourseDetails(course, index))}
-        </div>
-      </div>
-    </div>
-  );
-};
+          {courseDetails.map((course, index) => (
+            <div key={index} className="flex flex-col md:flex-row items-start mb-16">
+              {/* Images Section */}
+              <div className="md:w-1/2 mx-auto md:mx-0 mb-4 md:mb-0">
+                <div className="flex flex-col items-center md:items-start mb-4">
+                  <motion.img
+                    src={course.images[0]}
+                    alt={`${course.name} Large`}
+                    className="rounded-lg shadow-md w-3/4 h-auto mb-4 mx-auto md:mx-0"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                  <div className="flex flex-row flex-wrap justify-center md:justify-start space-x-4">
+                    {course.images.slice(1).map((image, idx) => (
+                      <motion.img
+                        key={idx}
+                        src={image}
+                        alt={`${course.name} Small ${idx + 1}`}
+                        className="rounded-lg shadow-md w-1/3 md:w-auto h-auto mb-4 mx-auto md:mx-0"
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
 
-const renderCourseDetails = (course, index) => {
-  return (
-    <div key={index} className="flex flex-col md:flex-row items-start mb-16">
-      {/* Images Section */}
-      <div className="md:w-1/2 mx-auto md:mx-0 mb-4 md:mb-0">
-        <div className="flex flex-col items-center md:items-start mb-4">
-          <img
-            src={course.images[0]}
-            alt={`${course.name} Large`}
-            className="rounded-lg shadow-md w-3/4 h-auto mb-4 mx-auto md:mx-0"
-          />
-          <div className="flex flex-row flex-wrap justify-center md:justify-start space-x-4">
-            {course.images.slice(1).map((image, idx) => (
-              <img
-                key={idx}
-                src={image}
-                alt={`${course.name} Small ${idx + 1}`}
-                className="rounded-lg shadow-md w-1/3 md:w-auto h-auto mb-4 mx-auto md:mx-0"
-              />
-            ))}
-          </div>
+              {/* Description Section */}
+              <div className="md:w-1/2 md:pl-8 flex flex-col justify-center">
+                <div className="flex items-center mb-2">
+                  <img src={course.logo} alt={`${course.name} Logo`} className="w-16 h-16 mr-4" />
+                  <div>
+                    <p className="text-blue-700 text-6xl font-bold">{course.code}</p>
+                    <h3 className="text-2xl font-bold">{course.name}</h3>
+                  </div>
+                </div>
+                <p className="text-lg mb-4">{course.description}</p>
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
-
-      {/* Description Section */}
-      <div className="md:w-1/2 md:pl-8 flex flex-col justify-center">
-        <div className="flex items-center mb-2">
-          <img src={course.logo} alt={`${course.name} Logo`} className="w-16 h-16 mr-4" />
-          <div>
-            <p className="text-blue-700 text-6xl font-bold">{course.code}</p>
-            <h3 className="text-2xl font-bold">{course.name}</h3>
-          </div>
-        </div>
-        <p className="text-lg mb-4">{course.description}</p>
       </div>
     </div>
   );
